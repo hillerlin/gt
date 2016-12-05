@@ -1,0 +1,108 @@
+<style> .table th{ text-align:center; }
+.content{ margin-top:20px; }
+fieldset a{ display: inline-block; margin:10px; }
+</style>
+<div class="bjui-pageHeader">
+    <form id="pagerForm" data-toggle="ajaxsearch" action="<?php echo U('Role/index')?>" method="post">
+        <input type="hidden" name="pageSize" value="${model.pageSize}">
+        <input type="hidden" name="pageCurrent" value="${model.pageCurrent}">
+        <input type="hidden" name="orderField" value="${param.orderField}">
+        <input type="hidden" name="orderDirection" value="${param.orderDirection}">
+        <input type="hidden" name="ActionName">
+        <input type="hidden" name="ActionPath">
+        <div class="bjui-searchBar">
+            <div class="pull-left">
+                <div class="btn-group">
+                    <button class="btn btn-green" id="addrole"   data-url="{:U('/Admin/Role/addAction')}"   data-toggle="lookupbtn" data-group="t2"  style="margin:0 10px;" >增加栏目</button>
+                    <input type="text" name="ActionName">
+                    <input type="text" name="ActionPath">
+                    <button type="button" class="btn-default dropdown-toggle" data-toggle="dropdown" data-icon="copy">复选框-批量操作<span class="caret"></span></button>
+                    <ul class="dropdown-menu right" role="menu">
+                        <li><a href="ajaxDone2.html" data-toggle="doajaxchecked" data-confirm-msg="确定要删除选中项吗？" data-idname="delids" data-group="ids">删除选中</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="bjui-pageContent tableContent">
+    <table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true">
+        <tr>
+            <th>角色:</th>
+            <td>
+                <input type="text" name="custom.roleName" id="realName" size="30" readonly>
+            </td>
+        </tr>
+        <tr>
+            <th>姓名:</th>
+            <td>
+                <input type="text" name="custom.profession" id="j_custom_profession" value="" readonly size="30" data-toggle="lookup" data-url="{:U('/Admin/Role/listName')}"  data-group="custom" data-width="600" data-height="300"  >
+                <input type="hidden" name="custom.adminId" >
+            </td>
+        </tr>
+    </table>
+    <div class="content">
+        <fieldset>
+            <input type="checkbox" name="">
+            <legend>项目立项 <button>新增操作</button></legend>
+            <br/>
+            前：
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <br/>
+            后:
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+            <a href="/admin/Role/edit"><input type="checkbox">百度</a>
+            <a href="/admin/Role/google"><input type="checkbox">google</a>
+        </fieldset>
+        <fieldset>
+            <input type="checkbox" name="">
+            <legend>项目立项 <button>新增操作</button></legend>
+            <br/>
+            前：
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <br/>
+            后:
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+            <a href="/admin/Role/edit">百度</a>
+            <a href="/admin/Role/google">google</a>
+        </fieldset>
+    </div>
+</div>
+<script type="text/javascript">
+    $('fieldset a').click(function(){
+       return false;
+    });
+    $(function(){
+        $('input[name=ActionName]').change(function(){
+           alert($(this).val());
+        });
+    });
+</script>

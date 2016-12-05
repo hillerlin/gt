@@ -1,0 +1,32 @@
+<style>
+    .table td{
+        text-align:center;
+    }
+</style>
+<div class="bjui-pageContent tableContent">
+    <table data-toggle="tablefixed" data-width="100%">
+        <tbody>
+            <tr>
+                <td>控制器名</td>
+                <td><input type="text" placeholder=" eg ： 项目立项" name="ActionName"  id="ActionName" onchange="setaction(this)"></td>
+            </tr>
+            <tr>
+                <td>路径</td>
+                <td><input type="text" placeholder="eg ：  /admin/Role" name="ActionPath" id="ActionPath" onchange="setaction(this)"></td>
+            </tr>
+        <tr>
+            <td colspan="2">
+                <a href="javascript:;" id="returndata" data-toggle="lookupback" data-args="{ActionName:'123', ActionPath: '321'}" class="btn btn-blue" title="选择本项" data-icon="check">选择</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        function setaction(e){
+            /*var content="{ActionName:'"+$('#ActionName').val()+"',ActionPath:'"+$('#ActionPath').val()+"'}";
+//            alert(content);
+            $('#returndata').attr('data-args',content);*/
+
+        }
+    </script>
+</div>
