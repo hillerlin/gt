@@ -45,3 +45,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.svn-base
+*.log
+Application/Runtime/Cache/Admin/076aa838ea49fd3a41408517a373d62e.php
+.svn/entries
+.svn/format
+*.db
