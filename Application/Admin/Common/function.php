@@ -277,3 +277,9 @@ function logicRoleId($roleId)
     }
 
 }
+
+//跨模块访问
+function logic($name)
+{
+    return $name ? D(ucfirst($name),'Logic'):null;
+}

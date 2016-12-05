@@ -57,7 +57,15 @@ class ProjectController extends CommonController {
         $this->assign(array('total' => $total, 'pageCurrent' => $page, 'list' => $list));
         $this->display('all_list');
     }
-
+    //我的审核项目
+    public function MyAudit()
+    {
+       logic('xml')->index();
+        
+    }
+    
+    
+    
     //项目立项
     public function start() {
         $pageSize = I('post.pageSize', 30);
