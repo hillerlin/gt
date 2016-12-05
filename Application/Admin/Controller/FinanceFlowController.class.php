@@ -48,7 +48,14 @@ class FinanceFlowController extends CommonController {
         $type_describe = $model->getTypeDescribe();
         
         $this->assign('type_describe', $type_describe);
-        $this->assign(array('total' => $result['total'], 'pageCurrent' => $page, 'list' => $result['list']));
+        $inMoney=0;
+        $outMoney=0;
+        foreach ($result['list'] as $kk=>$vv)
+        {
+               $inMoney+=$vv['in_money'];
+               $outMoney+=$vv['out_money'];
+        }
+        $this->assign(array('total' => $result['total'], 'pageCurrent' => $page, 'list' => $result['list'],'inMoney'=>$inMoney,'outMoney'=>$outMoney));
         $this->assign('post', $_POST);
         $this->display();
     }
