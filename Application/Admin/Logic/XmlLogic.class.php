@@ -34,13 +34,12 @@ class XmlLogic{
         }
         foreach ($data as $k =>$v){
             // $result[$v['attributes']['ID']]=$v;
-            $id=$v['attributes']['ID'];
+            //$id=$v['attributes']['ID'];
 
             if(array_key_exists('SOURCEREF',$v['attributes']))
             {
                 $data[$k]['SOURCEREF']=$v['attributes']['SOURCEREF'];
                 $data[$k]['TARGETREF']=$v['attributes']['TARGETREF'];
-
             }
             $data[$k]['name']=$v['attributes']['NAME'];
             unset($data[$k]['attributes']);

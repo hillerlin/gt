@@ -247,7 +247,8 @@ function getbname($arr,$bid){
         }
     }
     return '';
-}//记录日志
+}
+//记录日志
 function put($content)
 {
     $content .= "\r\n";
@@ -283,3 +284,77 @@ function logic($name)
 {
     return $name ? D(ucfirst($name),'Logic'):null;
 }
+//返回审核对应的信息
+function auditInit($auditType)
+{
+    switch ($auditType){
+        case 0:
+            return '待审核';
+        break;
+        case 1:
+            return '审核中';
+        break;
+        case 2:
+            return '已审核';
+        break;
+        case 3:
+            return '驳回';
+        break;
+    }
+}
+//根据前一个指派xmlId返回下一个执行人的信息
+//$type是判断是水平审批还是垂直审批 0是垂直审批 1是水平审批
+function xmlIdToInfo($id,$type=0)
+{
+    $list=logic('xml')->index();
+    foreach ($list as $k=>$v)
+    {
+        if($k==$id)
+        {
+
+            if($v['value'])
+            {
+                foreach($v['value'] as $kk=>$vv)
+                {
+                    if($vv['tag']=='BPMN2:OUTGOING')//指出的线
+                    {
+                         $id=$vv['value'];
+                         xmlIdToInfo($vv['value']);
+                    }
+                }
+            }else
+            {
+                return $v;
+            }
+        }
+
+    }
+}
+//根据role_name返回role_id
+function roleNameToid($name)
+{
+    $list=D('Role')->where(array('role_name'=>array('like',"%$name%")))->find();
+    return $list['role_id'];
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

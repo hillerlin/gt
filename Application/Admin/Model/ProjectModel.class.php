@@ -253,5 +253,21 @@ class ProjectModel extends BaseModel {
                 ->select();
         return array('total' => $total, 'list' => $list);
     }
+    
+    //根据admin_id来判断审核人是否有审核的项目
+    public function isAudit($adminId,$auditType)
+    {
+        $workFlow=D('WorkflowLog');
+        $list=$workFlow->where("`pro_author`=%d and `pro_state`=%d",array($adminId,$auditType))->select();
+        if($list)
+        {
+            return $list;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
 }
 

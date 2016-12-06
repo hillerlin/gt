@@ -187,12 +187,11 @@ function getArray($node) {
 
 
 header("Content-type:text/html; Charset=utf-8");
-$url = "123.xml";
 
 
 //  加载XML内容
 echo "<pre/>";
-$content = file_get_contents('gtbl.xml');
+$content = file_get_contents('gtblparallel.xml');
 $p = xml_parser_create();
 xml_parse_into_struct($p, $content, $vals, $index);
 xml_parser_free($p);

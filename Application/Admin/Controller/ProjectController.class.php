@@ -57,14 +57,93 @@ class ProjectController extends CommonController {
         $this->assign(array('total' => $total, 'pageCurrent' => $page, 'list' => $list));
         $this->display('all_list');
     }
-    //我的审核项目
+    /*********
+     * author:lmj
+     * 我的审核项目
+     * version:new
+     */
     public function MyAudit()
     {
-       logic('xml')->index();
+        $admin = session('admin');
+        $model=D('project');
+        $list= $model->isAudit($admin['admin_id'],0);
+        $this->assign(array('name'=>$admin['real_name'],'list'=>$list));
+        $this->display();
+      // logic('xml')->index();
         
     }
-    
-    
+    /********
+     * author:lmj
+     * 去审核
+     * version:new
+     */
+    public function MyAuditProject()
+    {
+        $plId=I('get.pl_id');//审核表流程id
+        $wfId=I('get.wf_id');//项目总流程表
+        $xmlId=I('get.xml_id');//项目总流程表
+        $pjId=I('get.pj_id');//项目id
+        $proLevel=I('get.pro_level');//当前审批次数
+        $proTimes=I('get.pro_times');//当前审批轮次
+        $this->assign(array('plId'=>$plId,'wfId'=>$wfId,'xmlId'=>$xmlId,'pjId'=>$pjId,'proLevel'=>$proLevel,'proTimes'=>$proTimes));
+        $this->display();
+        //$auditType=I('get.auditType');//选择的类型
+    }
+    /*******
+     * author:lmj
+     * 保存提交的审核数据
+     * version:new
+     */
+    public  function saveMyAudit()
+    {
+        $plId=I('get.plId');
+        $wfId=I('get.wfId');
+        $xmlId=I('get.xmlId');
+        $pjId=I('get.pjId');
+        $auditType=I('get.auditType');
+        $proLevel=I('get.proLevel');//当前审批级别
+        $proTimes=I('get.proTimes');//当前审批轮次
+        $admin = session('admin');
+       // $adminId=I('get.adminId');//管理员id,如果没有管理员id
+        $xmlInfo=logic('xml')->index()[xmlIdToInfo($xmlId)['TARGETREF']];//获取即将审核人的xml信息
+        $proRoleId=roleNameToid($xmlInfo['name']);//审批人角色id
+
+        //更新旧流程日志表的状态workflow_log
+         $oldWorkFolwObj=D('WorkflowLog')->where("`pl_id`=%d",array($plId))->data(array('pro_state'=>$auditType,'pro_last_edit_time'=>time()))->save();
+
+        //更新项目流程表的审批次数
+         $oldPjWorkFolwObj=D('PjWorkflow')->where("`wf_id`=%d",array($wfId))->setInc('pro_level_now',1);
+
+        //新建send_process表
+        $newSendProcess=D('SendProcess')
+            ->data(array('wf_id'=>$wfId,'sp_author'=>$admin['admin_id'],'sp_message'=>'已提交','sp_addtime'=>time(),'sp_role_id'=>$admin['role_id']))
+            ->add();
+
+        //新建workflow表
+        $newWorkFlowLog=D('WorkflowLog')
+            ->data(array('pj_id'=>$pjId,'sp_id'=>$newSendProcess,'wf_id'=>$wfId,
+                'pro_level'=>$proLevel+1,'pro_times'=>$proTimes,'pro_state'=>0,'pro_addtime'=>time(),'pro_role'=>$proRoleId,'pro_xml_id'=>xmlIdToInfo($xmlId)['TARGETREF']))
+            ->add();
+
+        if($oldWorkFolwObj && $oldPjWorkFolwObj)
+        {
+            $this->json_success('成功', '', '', true, array('tabid' => 'project-auditList'));
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     //项目立项
     public function start() {
